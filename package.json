@@ -1,0 +1,101 @@
+{
+  "name": "hapi-boilerplate",
+  "version": "0.0.1",
+  "description": "Hapi.js boilerplate",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vietthang/hapi-boilerplate.git"
+  },
+  "keywords": [
+    "hapi",
+    "boilerplate",
+    "promise",
+    "async"
+  ],
+  "author": "Yoshi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vietthang/hapi-boilerplate/issues"
+  },
+  "homepage": "https://github.com/vietthang/hapi-boilerplate#readme",
+  "scripts": {
+    "build": "webpack --config scripts/webpack.config.production.js",
+    "watch:dev": "webpack --colors --progress --config scripts/webpack.config.development.js --watch",
+    "build:dev": "webpack --colors --progress --config scripts/webpack.config.development.js",
+    "watch:test": "NODE_ENV=test webpack --colors --progress --config scripts/webpack.config.test.js --watch",
+    "build:test": "NODE_ENV=test webpack --colors --progress --config scripts/webpack.config.test.js",
+    "watch": "concurrently --kill-others \"npm run watch:dev\" \"npm run watch:test\"",
+    "server": "forever --minUptime 1000 --spinSleepTime 1000 --workingDir $(pwd) --watch --watchDirectory build/src index.js",
+    "server:debug": "forever --minUptime 1000 --spinSleepTime 1000 --workingDir $(pwd) --watch --watchDirectory build/src $(npm bin)/bugger index.js",
+    "mocha": "NODE_ENV=test mocha --colors --recursive --reporter progress ./build/test",
+    "prepare": "npm run clean && mkdir -p build && npm run migrate:latest",
+    "clean": "rm -rf build/*",
+    "lint": "eslint .",
+    "test": "npm run lint && npm run build:test && npm run coverage",
+    "start": "node index.js",
+    "coverage": "nyc npm run mocha",
+    "coverage:report": "nyc report",
+    "migrate:make": "ROOT_DIR=$(pwd) `npm bin`/babel-node `npm bin`/knex --knexfile src/db/knexfile.js migrate:make",
+    "migrate:latest": "ROOT_DIR=$(pwd) `npm bin`/babel-node `npm bin`/knex --knexfile src/db/knexfile.js migrate:latest",
+    "migrate:rollback": "ROOT_DIR=$(pwd) `npm bin`/babel-node `npm bin`/knex --knexfile src/db/knexfile.js migrate:rollback",
+    "seed:make": "ROOT_DIR=$(pwd) `npm bin`/babel-node `npm bin`/knex --knexfile src/db/knexfile.js seed:make",
+    "seed:run": "ROOT_DIR=$(pwd) `npm bin`/babel-node `npm bin`/knex --knexfile src/db/knexfile.js seed:run"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.16.0",
+    "babel-core": "6.17.0",
+    "babel-eslint": "7.0.0",
+    "babel-loader": "6.2.5",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-istanbul": "^2.0.1",
+    "babel-plugin-lodash": "^3.2.9",
+    "babel-preset-node6": "^11.0.0",
+    "babel-preset-stage-2": "^6.17.0",
+    "bugger": "^2.3.0",
+    "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
+    "concurrently": "^3.1.0",
+    "eslint": "^3.7.1",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-plugin-import": "^2.0.0",
+    "eslint-plugin-jsx-a11y": "^2.2.2",
+    "eslint-plugin-react": "^6.3.0",
+    "forever": "^0.15.2",
+    "handlebars-loader": "^1.4.0",
+    "json-schema-loader": "0.0.3",
+    "mocha": "3.1.0",
+    "nyc": "^8.3.0",
+    "source-map-support": "^0.4.3",
+    "webpack": "1.13.2",
+    "webpack-node-externals": "^1.4.3"
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.js"
+    ],
+    "sourceMap": false,
+    "instrument": false
+  },
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "bookshelf": "^0.10.2",
+    "boom": "^4.1.0",
+    "confidence": "^3.0.1",
+    "good": "^7.0.2",
+    "good-console": "^6.1.2",
+    "handlebars": "^4.0.5",
+    "hapi": "^15.1.1",
+    "hapi-swaggered-ui": "^2.5.1",
+    "inert": "^4.0.2",
+    "joi": "^9.1.0",
+    "knex": "^0.12.2",
+    "lodash": "^4.16.3",
+    "mysql": "^2.11.1",
+    "redis": "^2.6.2",
+    "source-map-support": "^0.4.3",
+    "sqlite3": "^3.1.5",
+    "swagger-parser": "^3.4.1",
+    "vision": "^4.1.0"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "sourceMap": true,
+  "presets": [
+    "stage-2",
+    "node6",
+  ],
+  "plugins": [
+    "add-module-exports",
+    "lodash",
+  ],
+  "env": {
+    "test": {
+      "plugins": [
+        "istanbul",
+      ],
+    }
+  }
+}
