@@ -28,8 +28,8 @@ get:
   - $ref: 'resource.yaml#/create'
   - properties:
       id:
-        type: string
-        format: uuid
+        type: integer
+        format: int32
       md5:
         type: string
         minLength: 32
