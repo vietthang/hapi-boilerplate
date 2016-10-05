@@ -1,0 +1,40 @@
+update:
+  type: object
+  properties:
+    name:
+      type: string
+      minLength: 1
+      maxLength: 32
+    status:
+      type: integer
+      enum:
+      - 0
+      - 1
+      - 2
+  additionalProperties: false
+create:
+  type: object
+  allOf:
+  - $ref: 'resource.yaml#/update'
+  - properties:
+      status:
+        default: 0
+    required:
+    - name
+get:
+  type: object
+  allOf:
+  - $ref: 'common.yaml#/BaseModel'
+  - $ref: 'resource.yaml#/create'
+  - properties:
+      id:
+        type: string
+        format: uuid
+      md5:
+        type: string
+        minLength: 32
+        maxLength: 32
+      mime:
+        type: string
+        minLength: 1
+        maxLength: 32

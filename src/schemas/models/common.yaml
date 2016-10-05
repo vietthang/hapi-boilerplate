@@ -1,0 +1,9 @@
+BaseModel:
+  type: object
+  properties:
+    createdAt:
+      type: 'integer'
+      format: 'int64'
+    updatedAt:
+      type: 'integer'
+      format: 'int64'

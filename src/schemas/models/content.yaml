@@ -1,0 +1,46 @@
+update:
+  type: object
+  properties:
+    resourceId:
+      type: string
+      format: uuid
+    name:
+      type: string
+      minLength: 1
+      maxLength: 32
+    title:
+      type: string
+      minLength: 1
+      maxLength: 255
+    description:
+      type: string
+    data:
+      type: object
+      additionalProperties: true
+    status:
+      type: integer
+      enum:
+      - 0
+      - 1
+      - 2
+  additionalProperties: false
+create:
+  type: object
+  allOf:
+  - $ref: 'content.yaml#/update'
+  - properties:
+      status:
+        default: 0
+    required:
+    - name
+    - resourceId
+    - data
+get:
+  type: object
+  allOf:
+  - $ref: 'common.yaml#/BaseModel'
+  - $ref: 'content.yaml#/create'
+  - properties:
+      id:
+        type: integer
+        format: int32
