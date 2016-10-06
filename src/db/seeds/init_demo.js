@@ -1,6 +1,9 @@
+import uuid from 'uuid'
+
 export async function seed(knex) {
   await knex('Resource').truncate()
   const [resourceId1] = await knex('Resource').insert({
+    id: uuid.v4(),
     name: 'Demo Resource #1',
     mime: 'application/octet-stream',
     md5: '14994fe4b40716b7029045a559ef8922',
@@ -9,6 +12,7 @@ export async function seed(knex) {
     updatedAt: Date.now(),
   }, 'id')
   const [resourceId2] = await knex('Resource').insert({
+    id: uuid.v4(),
     name: 'Demo Resource #2',
     mime: 'application/octet-stream',
     md5: 'f58016895b18052d00e0ae82359a570b',
@@ -17,6 +21,7 @@ export async function seed(knex) {
     updatedAt: Date.now(),
   }, 'id')
   const [resourceId3] = await knex('Resource').insert({
+    id: uuid.v4(),
     name: 'Demo Resource #3',
     mime: 'application/octet-stream',
     md5: 'cc9f2c34a503775c8803ca42bd725e26',

@@ -95,7 +95,7 @@ const swaggerTypeToFunctor = {
   object: makeJoiObjectSchema,
 }
 
-function makeJoiSchema(jsonSchema) {
+export function makeJoiSchema(jsonSchema) {
   return pipe(
     applyRuleAttribute(jsonSchema, 'description', (schema, value) => schema.description(value)),
     applyRuleAttribute(jsonSchema, 'required', (schema, value) => (value ? schema.required() : schema)),
