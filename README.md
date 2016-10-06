@@ -123,7 +123,7 @@ npm run mocha # run all test cases (lighter than "npm test")
   | └ ...
   |
   ├ lib/                    # <-- Auto generated directory contains compiled
-  |                         #     library to usw in production.
+  |                         #     library to use in production.
   |
   ├ build/                  # <-- Auto generated directory contains compiled
   |                         #     artifacts for test & dev.
