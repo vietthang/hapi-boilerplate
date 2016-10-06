@@ -18,6 +18,23 @@ npm install
 npm test
 ```
 
+## Build (production)
+```sh
+npm build
+```
+
+## Start (production)
+```sh
+npm start --production
+```
+
+## Development
+```
+npm run watch # run build and continously watch files for changed and rebuild
+npm run server # run server and auto reload when file change
+npm run mocha # run all test cases (lighter than "npm test")
+```
+
 ## Project structure
 ```
 └ project
