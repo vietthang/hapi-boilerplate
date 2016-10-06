@@ -17,10 +17,6 @@ module.exports = {
         test: /(\.json|\.yml|\.yaml)$/,
         loader: 'json-schema',
         exclude: /(node_modules|bower_components)/
-      },
-      {
-        test: /\.hbs$/,
-        loader: 'handlebars'
       }
     ]
   },
