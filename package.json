@@ -89,7 +89,7 @@
     "knex": "^0.12.2",
     "lodash": "^4.16.3",
     "mysql": "^2.11.1",
-    "overjoy-await": "0.0.3",
+    "overjoy-await": "0.0.4",
     "redis": "^2.6.2",
     "source-map-support": "^0.4.3",
     "sqlite3": "^3.1.5",
