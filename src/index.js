@@ -3,8 +3,8 @@ import good from 'good'
 import inert from 'inert'
 import vision from 'vision'
 import hapiSwaggeredUi from 'hapi-swaggered-ui'
+import * as overjoyAwait from 'overjoy-await'
 
-import * as asyncHandler from './modules/asyncHandler'
 import * as apiLoader from './modules/apiLoader'
 import { config } from './components/config'
 import routes from './routes'
@@ -33,7 +33,7 @@ export async function main(server = new Server()) {
     })
   }
 
-  await server.register(asyncHandler)
+  await server.register(overjoyAwait)
 
   await server.register(inert)
   await server.register(vision)
@@ -43,7 +43,7 @@ export async function main(server = new Server()) {
     options: {
       api,
       routes,
-      routeTransform: 'async',
+      routeTransform: 'await',
       allowTypes: config('/modules/store/allowTypes'),
     },
   })
