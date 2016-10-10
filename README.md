@@ -29,10 +29,58 @@ npm start --production
 ```
 
 ## Development
+
+### Before run
+
+Setup database as in file `/src/db/knexfile.js`, 'development' config. Then run
+
+```
+npm run migrate:latest
+npm run seed:run
+```
+
+### Run
+
+Run each for following command in separate command line tabs
+
 ```
 npm run watch # run build and continously watch files for changed and rebuild
+```
+
+```
 npm run server # run server and auto reload when file change
+```
+
+```
 npm run mocha # run all test cases (lighter than "npm test")
+```
+
+## Database migrations
+Read [knex](http://knexjs.org/#Migrations) for more information.
+
+### Create new migration file
+```
+npm run migrate:make [name]
+```
+
+### Update database to latest version
+```
+npm run migrate:latest
+```
+
+### Rollback a version of database
+```
+npm run migrate:rollback
+```
+
+### Make a new seed file
+```
+npm run seed:make [name]
+```
+
+### Run seed files
+```
+npm run seed:run
 ```
 
 ## Project structure
