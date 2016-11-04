@@ -24,8 +24,8 @@ function walkSync(dir, criteria) {
   })
 }
 
-const entries = walkSync('test', entry => entry.match(/spec\.js$/))
-  .reduce((prev, entry) => (Object.assign({}, prev, { [entry]: [entry] })), {})
+const entries = walkSync('src/db', entry => entry.match(/\.js$/))
+  .reduce((prev, entry) => (Object.assign({}, prev, { [entry.replace('src/', '')]: [entry] })), {})
 
 module.exports = {
   devtool: 'source-map',
@@ -50,7 +50,7 @@ module.exports = {
   },
   entry: entries,
   output: {
-    path: `${__dirname}/../build`,
+    path: `${__dirname}/../lib`,
     filename: '[name]',
     library: packageConfig.name,
     libraryTarget: 'umd',
@@ -62,17 +62,8 @@ module.exports = {
   ],
   plugins: [
     new webpack.BannerPlugin(
-      `
-        require("source-map-support").install();
-        require("bluebird").Promise.config({
-          warnings: true,
-          longStackTraces: true,
-        });
-      `,
+      'require("source-map-support").install();',
       { raw: true, entryOnly: true }
-    ),
-    new webpack.ProvidePlugin({
-      Promise: 'bluebird'
-    })
+    )
   ]
 }

@@ -1,0 +1,8 @@
+machine:
+  node:
+    version: 6.2.2
+test:
+  override:
+    - 'npm run test:junit':
+        environment:
+          MOCHA_FILE: $CIRCLE_TEST_REPORTS/junit/test-results.xml

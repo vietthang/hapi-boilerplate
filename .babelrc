@@ -2,7 +2,12 @@
   "sourceMap": true,
   "presets": [
     "stage-2",
-    "node6",
+    ["env", {
+      "targets": {
+        "node": 6,
+      },
+      "debug": false,
+    }]
   ],
   "plugins": [
     "add-module-exports",
@@ -13,6 +18,11 @@
       "plugins": [
         "istanbul",
       ],
-    }
+    },
+    "production": {
+      "presets": [
+        "babili",
+      ],
+    },
   }
 }

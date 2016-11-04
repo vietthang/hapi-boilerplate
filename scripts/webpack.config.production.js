@@ -27,7 +27,7 @@ module.exports = {
   entry: 'src/index.js',
   output: {
     path: `${__dirname}/../lib`,
-    filename: 'library.min.js',
+    filename: 'server.js',
     library: packageConfig.name,
     libraryTarget: 'umd'
   },
@@ -38,7 +38,6 @@ module.exports = {
     new webpack.BannerPlugin(
       'require("source-map-support").install();',
       { raw: true, entryOnly: true }
-    ),
-    new webpack.optimize.UglifyJsPlugin({ minimize: true })
+    )
   ]
 }

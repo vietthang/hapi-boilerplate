@@ -38,8 +38,17 @@ module.exports = {
   ],
   plugins: [
     new webpack.BannerPlugin(
-      'require("source-map-support").install();',
+      `
+        require("source-map-support").install();
+        require("bluebird").Promise.config({
+          warnings: true,
+          longStackTraces: true,
+        });
+      `,
       { raw: true, entryOnly: true }
-    )
+    ),
+    new webpack.ProvidePlugin({
+      Promise: 'bluebird'
+    })
   ]
 }
