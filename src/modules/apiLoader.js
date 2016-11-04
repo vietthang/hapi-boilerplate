@@ -2,7 +2,7 @@
 import SwaggerParser from 'swagger-parser'
 import {
   pipe, map, flatMap, has, mapValues, omit, pickBy, flatten, groupBy, mapKeys, isNil, reject, toPairs, isString,
-  isFunction,
+  isFunction, merge, isObjectLike,
 } from 'lodash/fp'
 import Joi from 'joi'
 import Boom from 'boom'
@@ -75,6 +75,7 @@ function makeJoiObjectSchema(rule) {
         return schema
       }
     }),
+    applyRuleAttribute(resolvedRule, 'additionalProperties', (schema, value) => schema.unknown(value)),
   )(Joi.object())
 }
 
@@ -121,13 +122,24 @@ function makeJoi(rules) {
 
 function transformRoutes(routes, transformer) {
   if (isString(transformer)) {
-    return transformRoutes(routes, route => ({
-      [transformer]: route,
+    return transformRoutes(routes, handler => ({
+      [transformer]: handler,
     }))
   }
 
   if (isFunction(transformer)) {
-    return mapValues(route => transformer(route), routes)
+    return mapValues((handler) => {
+      if (isNil(handler)) {
+        return null
+      }
+
+      const result = transformer(handler)
+      if (isObjectLike(result)) {
+        Object.defineProperty(result, 'originalHandler', handler)
+      }
+
+      return result
+    }, routes)
   }
 
   return routes
@@ -144,7 +156,7 @@ const swaggerToHapiMapping = {
 const noPayloadMethods = ['get', 'head']
 
 export async function register(server, options, next) {
-  const { api, routes = {}, jsonPath = '/swagger.json', routeTransform } = options
+  const { api, routes = {}, jsonPath = '/swagger.json', routeTransform, securityTransform } = options
 
   const transformedRoutes = transformRoutes(routes, routeTransform)
 
@@ -169,6 +181,22 @@ export async function register(server, options, next) {
 
           const shouldHasPayload = (noPayloadMethods.indexOf(method) === -1)
           const hasFile = params.find(param => param.type === 'file')
+          const handler = transformedRoutes[routeConfig.operationId]
+            || transformedRoutes[[method, path].join(' ')]
+            || ((req, reply) => {
+              reply(Boom.notImplemented())
+            })
+
+          const handlerConfig = handler.config
+            || (handler.originalHandler && handler.originalHandler.config)
+
+          let authObject = {}
+          if (isFunction(securityTransform)) {
+            const transformedAuthObject = securityTransform(routeConfig.security)
+            if (!isNil(transformedAuthObject)) {
+              authObject = { auth: transformedAuthObject }
+            }
+          }
 
           return {
 
@@ -176,20 +204,15 @@ export async function register(server, options, next) {
 
             path: path.join(basePath, routePath),
 
-            config: {
+            handler,
+
+            config: merge({
 
               description: routeConfig.description,
 
               tags: routeConfig.tags,
 
               id: routeConfig.operationId,
-
-              handler:
-                transformedRoutes[routeConfig.operationId]
-                || transformedRoutes[[method, path].join(' ')]
-                || ((req, reply) => {
-                  reply(Boom.notImplemented())
-                }),
 
               validate: {
 
@@ -233,7 +256,9 @@ export async function register(server, options, next) {
 
               } : {}),
 
-            },
+              ...authObject,
+
+            }, handlerConfig),
           }
         }
       ))(pathConfig)
