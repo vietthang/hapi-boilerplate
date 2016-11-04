@@ -170,7 +170,7 @@ npm run seed:run
   | |
   | └ ...
   |
-  ├ lib/                    # <-- Auto generated directory contains compiled
+  ├ dist/                   # <-- Auto generated directory contains compiled
   |                         #     library to use in production.
   |
   ├ build/                  # <-- Auto generated directory contains compiled
