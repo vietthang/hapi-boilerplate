@@ -32,7 +32,7 @@ export async function get(req) {
     throw Boom.notFound('Content not found')
   }
 
-  return content
+  return content.toJSON()
 }
 
 export async function update(req) {
