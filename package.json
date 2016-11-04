@@ -29,6 +29,7 @@
     "build:test": "NODE_ENV=test webpack --colors --progress --config scripts/webpack.config.test.js",
     "watch": "concurrently --kill-others \"npm run watch:dev\" \"npm run watch:test\"",
     "server": "NODE_ENV=development forever --minUptime 1000 --spinSleepTime 1000 --workingDir $(pwd) --watch --watchDirectory build/src index.js",
+    "dev": "concurrently --kill-others \"npm run watch\" \"npm run server\"",
     "mocha": "NODE_ENV=test mocha --colors --recursive --reporter progress ./build/test",
     "mocha:junit": "NODE_ENV=test mocha --colors --recursive --reporter mocha-junit-reporter ./build/test",
     "prepare": "npm run clean && mkdir -p build && npm run migrate:latest",
