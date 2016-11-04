@@ -14,7 +14,7 @@ export default function resolveAllOf(inputSpec) {
 
     if (isArray(allOf)) {
       return allOf.reduce(
-        (prevValue, value) => mergeWith(customizer, resolveAllOf(value), prevValue),
+        (prevValue, value) => mergeWith(customizer, prevValue, resolveAllOf(value)),
         omit('allOf', inputSpec),
       )
     } else if (isArray(inputSpec)) {
