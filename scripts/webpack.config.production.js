@@ -26,7 +26,7 @@ module.exports = {
   },
   entry: 'src/index.js',
   output: {
-    path: `${__dirname}/../lib`,
+    path: `${__dirname}/../dist`,
     filename: 'server.js',
     library: packageConfig.name,
     libraryTarget: 'umd'

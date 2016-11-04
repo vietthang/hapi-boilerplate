@@ -50,7 +50,7 @@ module.exports = {
   },
   entry: entries,
   output: {
-    path: `${__dirname}/../lib`,
+    path: `${__dirname}/../dist`,
     filename: '[name]',
     library: packageConfig.name,
     libraryTarget: 'umd',

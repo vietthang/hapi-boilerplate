@@ -1,9 +1,9 @@
-/* eslint global-require: [0] no-console: [0] no-var: [0] */
+/* eslint global-require: [0] no-console: [0] no-var: [0] import/no-unresolved: [0] */
 
 var app
 
 if (process.env.NODE_ENV === 'production') {
-  app = require('./lib/library.min')
+  app = require('./dist/server')
 } else {
   app = require('./build/src')
 }
