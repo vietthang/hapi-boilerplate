@@ -1,6 +1,5 @@
 const path = require('path')
 const fs = require('fs')
-const webpack = require('webpack')
 const webpackNodeExternals = require('webpack-node-externals')
 const packageConfig = require('../package.json')
 
@@ -59,11 +58,5 @@ module.exports = {
   },
   externals: [
     webpackNodeExternals()
-  ],
-  plugins: [
-    new webpack.BannerPlugin(
-      'require("source-map-support").install();',
-      { raw: true, entryOnly: true }
-    )
   ]
 }

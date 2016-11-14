@@ -12,6 +12,7 @@
   "plugins": [
     "add-module-exports",
     "lodash",
+    "source-map-support-for-6",
   ],
   "env": {
     "test": {
