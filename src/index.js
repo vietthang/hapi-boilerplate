@@ -4,8 +4,8 @@ import inert from 'inert'
 import vision from 'vision'
 import hapiSwaggeredUi from 'hapi-swaggered-ui'
 import * as overjoyAwait from 'overjoy-await'
+import * as overjoySwag from 'overjoy-swag'
 
-import * as apiLoader from './modules/apiLoader'
 import { config } from './components/config'
 import routes from './routes'
 import api from './schemas/api.swagger.yaml'
@@ -39,12 +39,11 @@ export async function main(server = new Server()) {
   await server.register(vision)
 
   await server.register({
-    register: apiLoader,
+    register: overjoySwag,
     options: {
-      api,
-      routes,
-      routeTransform: 'await',
-      allowTypes: config('/modules/store/allowTypes'),
+      schema: api,
+      handlers: routes,
+      handlerTransform: 'await',
     },
   })
 

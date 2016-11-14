@@ -1,12 +1,11 @@
 import bookshelf from 'bookshelf'
-import Joi from 'joi'
 import { Promise } from 'bluebird'
 import {
   pipe, omitBy, isNil, omit, toPairs, fromPairs, has, filter, memoize, map, isObjectLike, isString, isArray, isFunction,
 } from 'lodash/fp'
-import resolveAllOf from './resolveAllOf'
+import { validate } from 'overjoy-swag'
 
-import { makeJoiSchema } from '../modules/apiLoader'
+import resolveAllOf from './resolveAllOf'
 import knex from '../components/knex'
 
 const instance = bookshelf(knex)
@@ -30,19 +29,21 @@ instance.model = (modelName) => {
 
 const BookshelfModel = instance.Model
 
-const joiValidateAsync = Promise.promisify(Joi.validate)
+const validateAsync = Promise.promisify(validate)
 
 class ValidationError extends Error {
 
 }
 
 async function doValidate(model, schema) {
-  await joiValidateAsync(
-    pipe(
-      omitBy(value => isNil(value)),
-      omit(model.idAttribute), // never update the id field
-    )(model.attributes),
+  const attributes = pipe(
+    omitBy(value => isNil(value)),
+    omit(model.idAttribute), // never update the id field
+  )(model.attributes)
+
+  await validateAsync(
     schema,
+    attributes,
   )
 
   const modelClass = model.constructor
@@ -79,7 +80,10 @@ async function doValidate(model, schema) {
   }
 }
 
-const getResolvedSchema = memoize(schema => resolveAllOf(schema))
+const getResolvedSchema = memoize(schema => ({
+  ...resolveAllOf(schema),
+  additionalProperties: false,
+}))
 
 export default class Model extends BookshelfModel {
 
@@ -89,10 +93,12 @@ export default class Model extends BookshelfModel {
     const modelClass = this.constructor
 
     if (modelClass.schema) {
-      const joiSchema = makeJoiSchema(modelClass.schema)
+      const schema = getResolvedSchema(modelClass.schema)
 
-      this.on('creating', model => doValidate(model, joiSchema))
-      this.on('updating', model => doValidate(model, joiSchema))
+      // console.log('schema', schema)
+
+      this.on('creating', model => doValidate(model, schema))
+      this.on('updating', model => doValidate(model, schema))
     }
 
     this.on('creating', () => {

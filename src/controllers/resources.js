@@ -57,11 +57,13 @@ export async function update(req) {
   }
 }
 
-export async function destroy(req) {
+export async function destroy(req, reply) {
   const { id } = req.params
 
   try {
     await Resource.forge({ id }).destroy({ require: true })
+
+    return reply().code(204)
   } catch (error) {
     if (error instanceof Resource.NoRowsDeletedError) {
       throw Boom.notFound('Resource not found')
