@@ -28,7 +28,7 @@ const entries = walkSync('test', entry => entry.match(/spec\.js$/))
   .reduce((prev, entry) => (Object.assign({}, prev, { [entry]: [entry] })), {})
 
 module.exports = {
-  devtool: 'source-map',
+  devtool: 'eval-cheap-module-source-map',
   target: 'node',
   module: {
     loaders: [
