@@ -33,7 +33,7 @@ export async function seed(knex) {
   await knex('Content').truncate()
   await knex('Content').insert({
     resourceId: resourceId1,
-    title: 'Demo Content #1',
+    name: 'Demo Content #1',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean egestas id quam eget rutrum.',
     data: JSON.stringify({
       foo: 'bar',
@@ -44,7 +44,7 @@ export async function seed(knex) {
   })
   await knex('Content').insert({
     resourceId: resourceId1,
-    title: 'Demo Content #2',
+    name: 'Demo Content #2',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean egestas id quam eget rutrum.',
     data: JSON.stringify({
       foo: 'bar',
@@ -55,7 +55,7 @@ export async function seed(knex) {
   })
   await knex('Content').insert({
     resourceId: resourceId2,
-    title: 'Demo Content #3',
+    name: 'Demo Content #3',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean egestas id quam eget rutrum.',
     data: JSON.stringify({
       foo: 'bar',
@@ -66,7 +66,7 @@ export async function seed(knex) {
   })
   await knex('Content').insert({
     resourceId: resourceId2,
-    title: 'Demo Content #4',
+    name: 'Demo Content #4',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean egestas id quam eget rutrum.',
     data: JSON.stringify({
       foo: 'bar',
@@ -77,7 +77,7 @@ export async function seed(knex) {
   })
   await knex('Content').insert({
     resourceId: resourceId3,
-    title: 'Demo Content #5',
+    name: 'Demo Content #5',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean egestas id quam eget rutrum.',
     data: JSON.stringify({
       foo: 'bar',
