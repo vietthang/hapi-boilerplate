@@ -4,7 +4,7 @@ const webpackNodeExternals = require('webpack-node-externals')
 const packageConfig = require('../package.json')
 
 module.exports = {
-  devtool: 'eval-cheap-module-source-map',
+  devtool: 'source-map',
   target: 'node',
   module: {
     loaders: [
