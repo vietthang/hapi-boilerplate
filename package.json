@@ -99,7 +99,7 @@
     "lodash": "^4.16.6",
     "mysql": "^2.12.0",
     "overjoy-await": "0.0.5",
-    "overjoy-swag": "^1.0.15",
+    "overjoy-swag": "^1.0.16",
     "redis": "^2.6.3",
     "source-map-support": "^0.4.6",
     "sqlite3": "^3.1.8",
