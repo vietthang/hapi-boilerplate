@@ -12,7 +12,7 @@ export async function up(knex) {
   await knex.schema.createTable('Content', (table) => {
     table.increments()
     table.uuid('resourceId').notNullable().references('Resource.id')
-    table.string('name', 32)
+    table.string('name', 32).notNullable()
     table.string('title', 255)
     table.text('description')
     table.json('data')
